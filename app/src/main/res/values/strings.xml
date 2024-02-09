@@ -8,4 +8,6 @@
     <string name="remember_pass">Recordar contraseña</string>
     <string name="start_sesion">Iniciar sesión</string>
     <string name="crear_usuario">Crear nueva cuenta</string>
+    <string name="dialog_error_title">Error</string>
+    <string name="dialog_confirm">Aceptar</string>
 </resources>

@@ -6,13 +6,22 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.abrullc.mibibliotecamusical.R
+import com.abrullc.mibibliotecamusical.common.utils.Constants
 import com.abrullc.mibibliotecamusical.databinding.ActivityLoginBinding
+import com.abrullc.mibibliotecamusical.retrofit.UsuarioService
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.HttpException
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -24,120 +33,90 @@ class LoginActivity : AppCompatActivity() {
 
         loadImgPortada("https://imageio.forbes.com/specials-images/imageserve/568781608/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds")
 
-        /*val preferences = getPreferences(MODE_PRIVATE)
-
-        val rememberUsusario = preferences.getBoolean(getString(R.string.sp_remember_usuario), false)
-        val spIdUsuario = preferences.getLong(getString(R.string.sp_id_usuario), 0)
-
-        if (rememberUsusario) {
-            doAsync {
-                val usuario = getUserById(spIdUsuario)
-
-                uiThread {
-                    binding.etUsername.setText(usuario.nombre)
-                    binding.etPassword.setText(usuario.password)
-                    binding.cbRememberPass.isChecked = true
-
-                    Toast.makeText(this@LoginActivity, "Bienvenido ${usuario.nombre}!", Toast.LENGTH_LONG).show()
-                    goToMain()
-                }
-            }
-        }
-
-        focusChangeListener(binding.tilUsername, binding.etUsername)
-        focusChangeListener(binding.tilPassword, binding.etPassword)
+        //setupRecyclerView()
 
         binding.btnLogin.setOnClickListener {
             val username = binding.etUsername.text.toString()
             val password = binding.etPassword.text.toString()
 
-            if (checkUserFields(username, password)) {
-                doAsync {
-                    val usuario = getUser(username, password)
-                    uiThread {
-                        if (usuario != null) {
-                            with(preferences.edit()) {
-                                putLong(getString(R.string.sp_id_usuario_actual), usuario.idUsuario)
-                                    .apply()
-                            }
+            checkUserFields(username, password)
 
-                            if (binding.cbRememberPass.isChecked) {
-                                with(preferences.edit()) {
-                                    putLong(getString(R.string.sp_id_usuario), usuario.idUsuario)
-                                    putBoolean(getString(R.string.sp_remember_usuario), true)
-                                        .apply()
-                                }
-                            } else {
-                                with(preferences.edit()) {
-                                    putBoolean(getString(R.string.sp_remember_usuario), false)
-                                        .apply()
-                                }
-                            }
+            checkUsuario(username, password)
+        }
+    }
 
-                            Toast.makeText(this@LoginActivity, "Bienvenido ${usuario.nombre}!", Toast.LENGTH_LONG).show()
+    /*private fun setupRecyclerView() {
+        //configuracion del adapter
+
+        getCanciones()
+    }*/
+
+    private fun checkUsuario(loginUsername: String, loginPassword: String) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = retrofit.create(UsuarioService::class.java)
+
+        lifecycleScope.launch {
+            try {
+                val result = service.getUsers()
+                val usuarios = result.body()!!
+
+                // si es usuario compruebo que es el mismo que ha hecho login
+                // si es correcto y coincide hago un intent a la activiy de lo fragments
+                withContext(Dispatchers.Main) {
+                    for (usuario in usuarios) {
+                        if (usuario.username == loginUsername && usuario.password == loginPassword) {
+                            Toast.makeText(this@LoginActivity, "Bienvenido ${usuario.username}!", Toast.LENGTH_LONG).show()
                             goToMain()
-                        } else {
-                            errorAlertDialog("El usuario y/o contraseña introducidos son incorrectos")
                         }
                     }
+
+                    errorAlertDialog("El usuario y/o contraseña introducidos son incorrectos")
+                }
+
+            } catch (e: Exception) {
+                (e as? HttpException)?.let {
+                    errorAlertDialog("Error desconocido en el login")
+                    /*when(it.code()) {
+                        400 -> {
+                            updateUI(getString(R.string.main_error_server))
+                        }
+                        else ->
+                            updateUI(getString(R.string.main_error_response))
+                    }*/
                 }
             }
         }
-
-        binding.newUser.setOnClickListener {
-            val dialogView = layoutInflater.inflate(R.layout.dialog_register, null)
-            lateinit var user: UsuarioEntity
-
-            MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.dialog_new_user_title)
-                .setView(dialogView)
-                .setPositiveButton(R.string.dialog_register_user,
-                    DialogInterface.OnClickListener { _, _ ->
-                        val username = dialogView.findViewById<TextInputEditText>(R.id.etUsername).text.toString()
-                        val password = dialogView.findViewById<TextInputEditText>(R.id.etPassword).text.toString()
-
-                        if (checkUserFields(username, password)) {
-                            user = UsuarioEntity(nombre =  username, password = password)
-
-                            Toast.makeText(this, "Nuevo usuario $username registrado!", Toast.LENGTH_SHORT).show()
-
-                            binding.etUsername.setText(username)
-                            binding.etPassword.setText(password)
-
-                            doAsync {
-                                NoticiaApplication.database.usuarioDao().addUsuario(user)
-                            }
-                        }
-                    })
-                .setNegativeButton(R.string.dialog_cancel, null)
-                .setCancelable(true)
-                .show()
-
-            focusChangeListener(dialogView.findViewById(R.id.tilUsername), dialogView.findViewById(R.id.etUsername))
-            focusChangeListener(dialogView.findViewById(R.id.tilPassword), dialogView.findViewById(R.id.etPassword))
-
-            doAsync {
-                NoticiaApplication.database.usuarioDao().addUsuario(user)
-            }
-        }*/
     }
+     /*private fun getCanciones() {
+         val retrofit = Retrofit.Builder()
+             .baseUrl(Constants.BASE_URL)
+             .addConverterFactory(GsonConverterFactory.create())
+             .build()
 
-    /*private fun goToMain() {
+         val service = retrofit.create(CancionService::class.java)
+
+         lifecycleScope.launch {
+             try {
+                 val result = service.getCanciones()
+                 val canciones = result.body()!!
+
+                 withContext(Dispatchers.Main) {
+                     //randomAdapter.submitList(canciones)
+                 }
+
+             } catch (//tratar excepcion) {
+             // ...
+         }
+     }*/
+
+    private fun goToMain() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
-
-    private fun getUser(username: String, password: String): UsuarioEntity {
-        val usuario = NoticiaApplication.database.usuarioDao().getUsuario(username, password)
-
-        return usuario
-    }
-
-    private fun getUserById(idUsuario: Long): UsuarioEntity {
-        val usuario = NoticiaApplication.database.usuarioDao().getUsuarioById(idUsuario)
-
-        return usuario
-    }*/
 
     private fun loadImgPortada(url: String) {
         Glide.with(this)
@@ -147,7 +126,7 @@ class LoginActivity : AppCompatActivity() {
             .into(binding.imgPortada)
     }
 
-    /*private fun checkUserFields(username: String, password: String): Boolean {
+    private fun checkUserFields(username: String, password: String): Boolean {
         if (username.isEmpty()) {
             errorAlertDialog("El campo del nombre de usuario está vacío.")
             return false
@@ -181,5 +160,5 @@ class LoginActivity : AppCompatActivity() {
             .setPositiveButton(R.string.dialog_confirm, null)
             .setCancelable(false)
             .show()
-    }*/
+    }
 }
