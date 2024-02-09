@@ -1,7 +1,8 @@
-package com.abrullc.mibibliotecamusical
+package com.abrullc.mibibliotecamusical.mainModule
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.abrullc.mibibliotecamusical.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
