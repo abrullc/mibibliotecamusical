@@ -10,4 +10,7 @@
     <string name="crear_usuario">Crear nueva cuenta</string>
     <string name="dialog_error_title">Error</string>
     <string name="dialog_confirm">Aceptar</string>
+    <string name="home">Home</string>
+    <string name="find">Find</string>
+    <string name="Library">Library</string>
 </resources>
