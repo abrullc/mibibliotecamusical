@@ -61,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
-                val result = service.getUsers()
+                val result = service.getUsuarios()
                 val usuarios = result.body()!!
 
                 // si es usuario compruebo que es el mismo que ha hecho login
@@ -91,6 +91,8 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+
      /*private fun getCanciones() {
          val retrofit = Retrofit.Builder()
              .baseUrl(Constants.BASE_URL)

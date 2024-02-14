@@ -3,12 +3,7 @@ package com.abrullc.mibibliotecamusical.common.utils
 object Constants {
     // RUTAS
     const val BASE_URL = "http://lab1.navelsystems.com"
-
-    const val API_PATH = "/api"
-    const val REGISTER_PATH = "/register"
-    const val LOGIN_PATH = "/login"
-    const val USERS_PATH = "/usuarios"
-    const val TWO_PATH = "/2"
+    const val USUARIOS_PATH = "/usuarios"
 
     // PROPIEDADES
     const val ID_PROPERTY = "id"
