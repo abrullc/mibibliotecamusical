@@ -1,4 +1,4 @@
-package com.abrullc.mibibliotecamusical.fragments
+package com.abrullc.mibibliotecamusical.homeModule
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,4 +1,4 @@
-package com.abrullc.mibibliotecamusical.mainModule
+package com.abrullc.mibibliotecamusical.loginModule
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.abrullc.mibibliotecamusical.R
 import com.abrullc.mibibliotecamusical.common.utils.Constants
 import com.abrullc.mibibliotecamusical.databinding.ActivityLoginBinding
+import com.abrullc.mibibliotecamusical.mainModule.MainActivity
 import com.abrullc.mibibliotecamusical.retrofit.Usuario
 import com.abrullc.mibibliotecamusical.retrofit.UsuarioService
 import com.bumptech.glide.Glide
@@ -32,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        loadImgPortada("https://imageio.forbes.com/specials-images/imageserve/568781608/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds")
+        loadImgPortada("https://i.blogs.es/827c3a/spotify-0/1366_2000.jpg")
 
         //setupRecyclerView()
 

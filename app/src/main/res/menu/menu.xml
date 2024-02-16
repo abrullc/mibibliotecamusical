@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-        <item android:id="@+id/bottom_home"
+        <item
+            android:id="@+id/bottom_home"
             android:title="@string/home"
             android:icon="@drawable/ic_home"/>
 
-        <item android:id="@+id/bottom_bookmarks"
+        <item
+            android:id="@+id/bottom_bookmarks"
             android:title="@string/find"
             android:icon="@drawable/ic_find"/>
-    <!--TODO: change the search icon-->
 
-        <item android:id="@+id/bottom_profile"
-            android:title="@string/Library"
+        <item
+            android:id="@+id/bottom_profile"
+            android:title="@string/library"
             android:icon="@drawable/ic_library"/>
 
 </menu>
