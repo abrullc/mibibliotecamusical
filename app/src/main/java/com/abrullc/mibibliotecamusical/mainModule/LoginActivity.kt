@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.abrullc.mibibliotecamusical.R
 import com.abrullc.mibibliotecamusical.common.utils.Constants
 import com.abrullc.mibibliotecamusical.databinding.ActivityLoginBinding
+import com.abrullc.mibibliotecamusical.retrofit.Usuario
 import com.abrullc.mibibliotecamusical.retrofit.UsuarioService
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -42,6 +43,35 @@ class LoginActivity : AppCompatActivity() {
             checkUserFields(username, password)
 
             checkUsuario(username, password)
+        }
+
+        binding.newUser.setOnClickListener {
+            val dialogView = layoutInflater.inflate(R.layout.dialog_register, null)
+            lateinit var usuario: Usuario
+
+            MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.dialog_new_user_title)
+                .setView(dialogView)
+                .setPositiveButton(R.string.dialog_register_user,
+                    DialogInterface.OnClickListener { _, _ ->
+                        val username = dialogView.findViewById<TextInputEditText>(R.id.etUsername).text.toString()
+                        val password = dialogView.findViewById<TextInputEditText>(R.id.etPassword).text.toString()
+
+                        if (checkUserFields(username, password)) {
+                            //user = Usuario(username = username, password = password)
+
+                            Toast.makeText(this, "Nuevo usuario $username registrado!", Toast.LENGTH_SHORT).show()
+
+                            binding.etUsername.setText(username)
+                            binding.etPassword.setText(password)
+                        }
+                    })
+                .setNegativeButton(R.string.dialog_cancel, null)
+                .setCancelable(true)
+                .show()
+
+            focusChangeListener(dialogView.findViewById(R.id.tilUsername), dialogView.findViewById(R.id.etUsername))
+            focusChangeListener(dialogView.findViewById(R.id.tilPassword), dialogView.findViewById(R.id.etPassword))
         }
     }
 

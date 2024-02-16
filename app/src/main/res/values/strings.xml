@@ -13,4 +13,7 @@
     <string name="home">Home</string>
     <string name="find">Find</string>
     <string name="Library">Library</string>
+    <string name="dialog_new_user_title">Nuevo usuario</string>
+    <string name="dialog_register_user">Registrar usuario</string>
+    <string name="dialog_cancel">Cancelar</string>
 </resources>
