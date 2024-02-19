@@ -11,8 +11,8 @@ import com.abrullc.mibibliotecamusical.R
 import com.abrullc.mibibliotecamusical.common.utils.Constants
 import com.abrullc.mibibliotecamusical.databinding.ActivityLoginBinding
 import com.abrullc.mibibliotecamusical.mainModule.MainActivity
-import com.abrullc.mibibliotecamusical.retrofit.Usuario
-import com.abrullc.mibibliotecamusical.retrofit.UsuarioService
+import com.abrullc.mibibliotecamusical.retrofit.entities.Usuario
+import com.abrullc.mibibliotecamusical.retrofit.services.UsuarioService
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.dialog.MaterialAlertDialogBuilder

@@ -1,4 +1,4 @@
-package com.abrullc.mibibliotecamusical.retrofit
+package com.abrullc.mibibliotecamusical.retrofit.entities
 
 import java.util.Date
 
