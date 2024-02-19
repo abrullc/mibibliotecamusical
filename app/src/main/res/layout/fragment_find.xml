@@ -5,4 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".findModule.FindFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Esto es FIND"/>
+
 </FrameLayout>

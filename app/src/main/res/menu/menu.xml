@@ -9,10 +9,4 @@
             android:id="@+id/bottom_bookmarks"
             android:title="@string/find"
             android:icon="@drawable/ic_find"/>
-
-        <item
-            android:id="@+id/bottom_profile"
-            android:title="@string/library"
-            android:icon="@drawable/ic_library"/>
-
 </menu>
