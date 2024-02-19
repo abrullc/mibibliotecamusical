@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import com.abrullc.mibibliotecamusical.BibliotecaMusicalApplication
 import com.abrullc.mibibliotecamusical.R
 import com.abrullc.mibibliotecamusical.common.utils.Constants
 import com.abrullc.mibibliotecamusical.databinding.ActivityLoginBinding
@@ -100,6 +101,7 @@ class LoginActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     for (usuario in usuarios) {
                         if (usuario.username == loginUsername && usuario.password == loginPassword) {
+                            BibliotecaMusicalApplication.usuario = usuario
                             Toast.makeText(this@LoginActivity, "Bienvenido ${usuario.username}!", Toast.LENGTH_LONG).show()
                             goToMain()
                         }
