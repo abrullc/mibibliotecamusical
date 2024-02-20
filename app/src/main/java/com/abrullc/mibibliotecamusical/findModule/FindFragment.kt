@@ -6,13 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.abrullc.mibibliotecamusical.R
+import com.abrullc.mibibliotecamusical.databinding.FragmentFindBinding
+import com.abrullc.mibibliotecamusical.databinding.FragmentHomeBinding
 
 class FindFragment : Fragment() {
+    private lateinit var mBinding: FragmentFindBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_find, container, false)
+        mBinding = FragmentFindBinding.inflate(inflater, container, false)
+
+        return mBinding.root
     }
 }

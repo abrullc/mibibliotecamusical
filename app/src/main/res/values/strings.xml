@@ -16,4 +16,5 @@
     <string name="home">Inicio</string>
     <string name="find">Find</string>
     <string name="library">Playlists</string>
+    <string name="error_general_peticion">Error desconocido en la peticion</string>
 </resources>

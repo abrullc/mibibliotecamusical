@@ -6,8 +6,9 @@ import com.abrullc.mibibliotecamusical.retrofit.entities.Usuario
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface AlbumService {
     @GET(Constants.ALBUMS_USUARIO_PATH)
-    suspend fun getAlbumsUsuario(id: Int): Response<MutableList<Album>>
+    suspend fun getAlbumsUsuario(@Path("id") id: Int): Response<MutableList<Album>>
 }
