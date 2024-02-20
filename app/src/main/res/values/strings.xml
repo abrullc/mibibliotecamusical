@@ -17,4 +17,15 @@
     <string name="find">Find</string>
     <string name="library">Playlists</string>
     <string name="error_general_peticion">Error desconocido en la peticion</string>
+    <string name="description_image_playlist_card">Imagen playlist</string>
+    <string name="playlist_title">Titulo playlist</string>
+    <string name="playlist_numero_canciones">00 canciones</string>
+    <string name="playlist_fecha_creacion">Creada el 00/00/0000</string>
+    <string name="description_image_podcast_card">Imagen podcast</string>
+    <string name="podcast_title">Titulo podcast</string>
+    <string name="podcast_anyo">Año: 0000</string>
+    <string name="description_image_album_card">Imagen album</string>
+    <string name="album_title">Titulo album</string>
+    <string name="album_artista">Artista: nombreArtista</string>
+    <string name="album_anyo">Año: 0000</string>
 </resources>

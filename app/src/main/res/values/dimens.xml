@@ -7,4 +7,7 @@
     <dimen name="tv_new_user_height">32dp</dimen>
     <dimen name="icon_default">35dp</dimen>
     <dimen name="titleCardHeight">80dp</dimen>
+    <dimen name="img_card_size">100dp</dimen>
+    <dimen name="card_size">300dp</dimen>
+    <dimen name="margin_min">8dp</dimen>
 </resources>

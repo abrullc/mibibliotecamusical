@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.abrullc.mibibliotecamusical.R
 import com.abrullc.mibibliotecamusical.databinding.ItemAlbumBinding
 import com.abrullc.mibibliotecamusical.retrofit.entities.Album
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class AlbumListAdapter(): ListAdapter<Album, RecyclerView.ViewHolder>(AlbumDiffCallback()) {
     private lateinit var context: Context
@@ -30,18 +32,19 @@ class AlbumListAdapter(): ListAdapter<Album, RecyclerView.ViewHolder>(AlbumDiffC
         val album = getItem(position)
 
         with(holder as ViewHolder) {
-            /*with(binding) {
-                tvNombre.text = album.name
-                tvPrecio.text = album.price.toString()+"€"
-                cbFavorite.setOnClickListener {
-                    ExamenApplication.albumsFavoritos.add(album)
+            with(binding) {
+                tvTitulo.text = album.titulo
+                tvArtista.text = "Artista: "+album.artista.nombre
+                tvAnyo.text = "Año: "+album.anyo.day+"/"+album.anyo.month+"/"+album.anyo.year
+
+                if (album.imagen != null && album.imagen != "") {
+                    Glide.with(context)
+                        .load(album.imagen)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .centerCrop()
+                        .into(imageAlbum)
                 }
-                Glide.with(context)
-                    .load(album.imageUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .centerCrop()
-                    .into(imageAlbum)
-            }*/
+            }
         }
     }
 

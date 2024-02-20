@@ -30,18 +30,20 @@ class PlaylistListAdapter(): ListAdapter<Playlist, RecyclerView.ViewHolder>(Play
         val playlist = getItem(position)
 
         with(holder as ViewHolder) {
-            /*with(binding) {
-                tvNombre.text = playlist.name
-                tvPrecio.text = playlist.price.toString()+"€"
-                cbFavorite.setOnClickListener {
-                    ExamenApplication.playlistsFavoritos.add(playlist)
+            with(binding) {
+                tvTitulo.text = playlist.titulo
+                if (playlist.numeroCanciones != null || playlist.numeroCanciones > 0) {
+                    tvNumeroCanciones.text = playlist.numeroCanciones.toString()+" canciones"
+                } else {
+                    tvFechaCreacion.text = "Sin canciones"
                 }
-                Glide.with(context)
-                    .load(playlist.imageUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .centerCrop()
-                    .into(imagePlaylist)
-            }*/
+
+                if (playlist.fechaCreacion != null) {
+                    tvFechaCreacion.text = "Creada el "+playlist.fechaCreacion.day+"/"+playlist.fechaCreacion.month+"/"+playlist.fechaCreacion.year
+                } else {
+                    tvFechaCreacion.text = "Fecha de creación no especificada"
+                }
+            }
         }
     }
 

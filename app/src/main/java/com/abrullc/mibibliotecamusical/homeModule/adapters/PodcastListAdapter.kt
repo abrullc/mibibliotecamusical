@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.abrullc.mibibliotecamusical.R
 import com.abrullc.mibibliotecamusical.databinding.ItemPodcastBinding
 import com.abrullc.mibibliotecamusical.retrofit.entities.Podcast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class PodcastListAdapter(): ListAdapter<Podcast, RecyclerView.ViewHolder>(PodcastDiffCallback()) {
     private lateinit var context: Context
@@ -30,18 +32,22 @@ class PodcastListAdapter(): ListAdapter<Podcast, RecyclerView.ViewHolder>(Podcas
         val podcast = getItem(position)
 
         with(holder as ViewHolder) {
-            /*with(binding) {
-                tvNombre.text = podcast.name
-                tvPrecio.text = podcast.price.toString()+"€"
-                cbFavorite.setOnClickListener {
-                    ExamenApplication.podcastsFavoritos.add(podcast)
+            with(binding) {
+                tvTitulo.text = podcast.titulo
+                if (podcast.anyo != null) {
+                    tvAnyo.text = "Año: "+podcast.anyo.year
+                } else {
+                    tvAnyo.text = "Sin año"
                 }
-                Glide.with(context)
-                    .load(podcast.imageUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .centerCrop()
-                    .into(imagePodcast)
-            }*/
+
+                if (podcast.imagen != null && podcast.imagen != "") {
+                    Glide.with(context)
+                        .load(podcast.imagen)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .centerCrop()
+                        .into(imagePodcast)
+                }
+            }
         }
     }
 
