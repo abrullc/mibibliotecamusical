@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/card_width"
-    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/img_width"
     android:layout_margin="@dimen/common_margin_default"
     android:backgroundTint="@color/md_theme_light_secondaryContainer">
 
@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/imageCancion"
             android:src="@drawable/ic_music"
-            android:layout_width="@dimen/img_width"
+            android:layout_width="80dp"
             android:layout_height="0dp"
             android:contentDescription="@string/description_image_song_card"
             android:background="@color/seed"
@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/songInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -39,8 +39,32 @@
                 android:id="@+id/tvTitulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/album_title"
-                android:textAppearance="?attr/textAppearanceHeadline6"/>
+                tools:text="@string/cancion_title"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/song_duration"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintEnd_toStartOf="@+id/iconTime"
+                app:layout_constraintTop_toTopOf="@id/iconTime"
+                app:layout_constraintBottom_toBottomOf="@id/iconTime"/>
+
+            <ImageView
+                android:id="@+id/iconTime"
+                android:src="@drawable/ic_time"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:tint="@color/md_theme_light_tertiary"
+                android:contentDescription="@string/description_icon_time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvTitulo"
+                app:layout_constraintBottom_toBottomOf="@id/tvTitulo"
+                android:paddingStart="@dimen/common_padding_min"/>
 
             <TextView
                 android:id="@+id/tvArtista"
@@ -48,7 +72,9 @@
                 android:layout_height="wrap_content"
                 tools:text="@string/album_artista"
                 android:textAppearance="?attr/textAppearanceBody1"
-                android:layout_marginTop="@dimen/margin_min"/>
+                android:layout_marginTop="@dimen/margin_min"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitulo"/>
 
             <TextView
                 android:id="@+id/tvAnyo"
@@ -56,9 +82,33 @@
                 android:layout_height="wrap_content"
                 tools:text="@string/album_anyo"
                 android:textAppearance="?attr/textAppearanceBody1"
-                android:layout_marginTop="@dimen/margin_min"/>
+                android:layout_marginTop="@dimen/margin_min"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvArtista"/>
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/tvReproductions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/song_reproductions"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintEnd_toStartOf="@+id/iconPlay"
+                app:layout_constraintTop_toTopOf="@id/iconPlay"
+                app:layout_constraintBottom_toBottomOf="@id/iconPlay"/>
+
+            <ImageView
+                android:id="@+id/iconPlay"
+                android:src="@drawable/ic_play"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:tint="@color/md_theme_light_tertiary"
+                android:contentDescription="@string/description_icon_time"
+                app:layout_constraintStart_toStartOf="@id/iconTime"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:paddingStart="@dimen/common_padding_min"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

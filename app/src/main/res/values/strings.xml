@@ -41,4 +41,8 @@
     <string name="description_icon_album">Album icon</string>
     <string name="songs_title">Canciones</string>
     <string name="description_image_song_card">Imagen cancion</string>
+    <string name="cancion_title">Título canción</string>
+    <string name="description_icon_time">Time icon</string>
+    <string name="song_duration">000s</string>
+    <string name="song_reproductions">0000</string>
 </resources>
