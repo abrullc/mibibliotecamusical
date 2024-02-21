@@ -37,10 +37,14 @@ class PlaylistListAdapter(): ListAdapter<Playlist, RecyclerView.ViewHolder>(Play
             with(binding) {
                 tvTitulo.text = playlist.titulo.capitalize()
 
-                if (playlist.numeroCanciones != null || playlist.numeroCanciones > 0) {
-                    tvNumeroCanciones.text = playlist.numeroCanciones.toString()+" canciones"
+                if (playlist.numeroCanciones != null && playlist.numeroCanciones > 0) {
+                    if (playlist.numeroCanciones == 1) {
+                        tvNumeroCanciones.text = "1 canción"
+                    } else {
+                        tvNumeroCanciones.text = playlist.numeroCanciones.toString()+" canciones"
+                    }
                 } else {
-                    tvFechaCreacion.text = "Sin canciones"
+                    tvNumeroCanciones.text = "Sin canciones"
                 }
 
                 if (playlist.fechaCreacion != null) {

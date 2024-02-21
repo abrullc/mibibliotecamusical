@@ -14,6 +14,13 @@ class CommonFunctions {
         return formatedFecha
     }
 
+    fun getAnyo(date: Date): String {
+        val fecha = date.toString().split(" ")
+        val fechaAnyo = fecha[fecha.lastIndex]
+
+        return fechaAnyo
+    }
+
     fun validateURL(url: String): Boolean {
         if (!URLUtil.isValidUrl(url.trim()) && !url.trim().isEmpty()) {
             return false
