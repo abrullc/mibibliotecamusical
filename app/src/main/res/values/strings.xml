@@ -39,4 +39,6 @@
     <string name="description_icon_playlist">Playlist icon</string>
     <string name="description_icon_podcast">Podcast icon</string>
     <string name="description_icon_album">Album icon</string>
+    <string name="songs_title">Canciones</string>
+    <string name="description_image_song_card">Imagen cancion</string>
 </resources>
