@@ -45,4 +45,5 @@
     <string name="description_icon_time">Time icon</string>
     <string name="song_duration">000s</string>
     <string name="song_reproductions">0000</string>
+    <string name="album_song">Álbum:</string>
 </resources>

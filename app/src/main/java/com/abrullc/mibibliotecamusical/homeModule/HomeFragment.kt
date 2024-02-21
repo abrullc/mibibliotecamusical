@@ -106,7 +106,7 @@ class HomeFragment : Fragment() {
                 (e as? HttpException)?.let {
                     when(it.code()) {
                         400 -> {
-                            //updateUI(getString(R.string.main_error_server))
+                            Toast.makeText(context, R.string.main_error_server, Toast.LENGTH_SHORT).show()
                         }
                         else ->
                             Toast.makeText(context, R.string.error_general_peticion, Toast.LENGTH_SHORT).show()
@@ -137,7 +137,7 @@ class HomeFragment : Fragment() {
                 (e as? HttpException)?.let {
                     when(it.code()) {
                         400 -> {
-                            //updateUI(getString(R.string.main_error_server))
+                            Toast.makeText(context, R.string.main_error_server, Toast.LENGTH_SHORT).show()
                         }
                         else ->
                             Toast.makeText(context, R.string.error_general_peticion, Toast.LENGTH_SHORT).show()
@@ -168,7 +168,7 @@ class HomeFragment : Fragment() {
                 (e as? HttpException)?.let {
                     when(it.code()) {
                         400 -> {
-                            //updateUI(getString(R.string.main_error_server))
+                            Toast.makeText(context, R.string.main_error_server, Toast.LENGTH_SHORT).show()
                         }
                         else ->
                             Toast.makeText(context, R.string.error_general_peticion, Toast.LENGTH_SHORT).show()
