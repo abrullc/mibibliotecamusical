@@ -6,65 +6,167 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".homeModule.HomeFragment">
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="0dp"
+    
+    <LinearLayout
+        android:id="@+id/title_layout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/home_title"
-        android:textAppearance="?attr/textAppearanceHeadline5"
-        android:textStyle="bold"
-        android:textColor="@color/seed"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/common_margin_default"/>
+        android:layout_marginTop="@dimen/common_margin_default">
+
+        <ImageView
+            android:id="@+id/iconMusic1"
+            android:src="@drawable/ic_music"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:tint="@color/seed"
+            android:contentDescription="@string/description_icon_music"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_title"
+            android:textAppearance="?attr/textAppearanceHeadlineMedium"
+            android:textStyle="bold|italic"
+            android:textColor="@color/seed"
+            android:layout_marginHorizontal="@dimen/margin_min"/>
+
+        <ImageView
+            android:id="@+id/iconMusic2"
+            android:src="@drawable/ic_music"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:tint="@color/seed"
+            android:contentDescription="@string/description_icon_music"/>
+    </LinearLayout>
 
     <View
         android:id="@+id/separator"
         android:layout_width="match_parent"
         android:layout_height="@dimen/separator_size"
-        android:background="@color/md_theme_light_outlineVariant"
+        android:background="@color/md_theme_dark_onSurfaceVariant"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/title_layout"
         android:layout_margin="@dimen/common_margin_default"/>
+
+    <ImageView
+        android:id="@+id/iconPlaylist"
+        android:src="@drawable/ic_playlist"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/icon_size"
+        app:tint="@color/md_theme_light_tertiary"
+        android:contentDescription="@string/description_icon_playlist"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvTitlePlaylists"
+        app:layout_constraintTop_toTopOf="@id/tvTitlePlaylists"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitlePlaylists"
+        android:layout_marginStart="@dimen/common_margin_default"/>
+
+    <TextView
+        android:id="@+id/tvTitlePlaylists"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/playlists_title"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textColor="@color/md_theme_light_tertiary"
+        app:layout_constraintStart_toEndOf="@id/iconPlaylist"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separator"
+        app:layout_constraintBottom_toTopOf="@id/rcvPlaylists"
+        android:layout_marginTop="@dimen/large_margin"
+        android:layout_marginHorizontal="@dimen/margin_min"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvPlaylists"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginVertical="@dimen/common_margin_default"
         tools:listitem="@layout/item_playlist"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/separator"
-        app:layout_constraintBottom_toTopOf="@+id/rcvPodcasts"/>
+        app:layout_constraintTop_toBottomOf="@id/tvTitlePlaylists"
+        app:layout_constraintBottom_toTopOf="@+id/tvTitlePodcasts"/>
+
+    <ImageView
+        android:id="@+id/iconPodcast"
+        android:src="@drawable/ic_podcast"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/icon_size"
+        app:tint="@color/md_theme_light_tertiary"
+        android:contentDescription="@string/description_icon_podcast"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvTitlePodcasts"
+        app:layout_constraintTop_toTopOf="@id/tvTitlePodcasts"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitlePodcasts"
+        android:layout_marginStart="@dimen/common_margin_default"/>
+
+    <TextView
+        android:id="@+id/tvTitlePodcasts"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/podcasts_title"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textColor="@color/md_theme_light_tertiary"
+        app:layout_constraintStart_toEndOf="@id/iconPodcast"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rcvPlaylists"
+        app:layout_constraintBottom_toTopOf="@id/rcvPodcasts"
+        android:layout_marginTop="@dimen/common_margin_default"
+        android:layout_marginHorizontal="@dimen/margin_min"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvPodcasts"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginVertical="@dimen/common_margin_default"
         tools:listitem="@layout/item_podcast"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rcvPlaylists"
-        app:layout_constraintBottom_toTopOf="@+id/rcvAlbums"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvTitlePodcasts"
+        app:layout_constraintBottom_toTopOf="@+id/tvTitleAlbums"/>
+
+    <ImageView
+        android:id="@+id/iconAlbum"
+        android:src="@drawable/ic_album"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/icon_size"
+        app:tint="@color/md_theme_light_tertiary"
+        android:contentDescription="@string/description_icon_album"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvTitleAlbums"
+        app:layout_constraintTop_toTopOf="@id/tvTitleAlbums"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitleAlbums"
+        android:layout_marginStart="@dimen/common_margin_default"/>
+
+    <TextView
+        android:id="@+id/tvTitleAlbums"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/albums_title"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textColor="@color/md_theme_light_tertiary"
+        app:layout_constraintStart_toEndOf="@id/iconAlbum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rcvPodcasts"
+        app:layout_constraintBottom_toTopOf="@id/rcvAlbums"
+        android:layout_marginTop="@dimen/common_margin_default"
+        android:layout_marginHorizontal="@dimen/margin_min"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvAlbums"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginVertical="@dimen/common_margin_default"
         tools:listitem="@layout/item_album"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rcvPodcasts"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleAlbums"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/common_margin_default"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

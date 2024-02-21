@@ -32,4 +32,11 @@
     <string name="sp_id_usuario">id_usuario</string>
     <string name="sp_remember_usuario">control_recuerdo_usuario</string>
     <string name="main_error_server">Error en la petición</string>
+    <string name="playlists_title">Playlists</string>
+    <string name="podcasts_title">Podcasts</string>
+    <string name="albums_title">Albums</string>
+    <string name="description_icon_music">Music icon</string>
+    <string name="description_icon_playlist">Playlist icon</string>
+    <string name="description_icon_podcast">Podcast icon</string>
+    <string name="description_icon_album">Album icon</string>
 </resources>
