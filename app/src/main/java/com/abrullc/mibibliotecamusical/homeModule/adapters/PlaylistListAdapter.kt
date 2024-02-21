@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.abrullc.mibibliotecamusical.R
+import com.abrullc.mibibliotecamusical.common.utils.CommonFunctions
 import com.abrullc.mibibliotecamusical.databinding.ItemPlaylistBinding
 import com.abrullc.mibibliotecamusical.retrofit.entities.Playlist
 
 class PlaylistListAdapter(): ListAdapter<Playlist, RecyclerView.ViewHolder>(PlaylistDiffCallback()) {
     private lateinit var context: Context
+    private lateinit var commonFunctions: CommonFunctions
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemPlaylistBinding.bind(view)
@@ -20,6 +22,8 @@ class PlaylistListAdapter(): ListAdapter<Playlist, RecyclerView.ViewHolder>(Play
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
+
+        commonFunctions = CommonFunctions()
 
         val view = LayoutInflater.from(context).inflate(R.layout.item_playlist, parent, false)
 
@@ -31,7 +35,8 @@ class PlaylistListAdapter(): ListAdapter<Playlist, RecyclerView.ViewHolder>(Play
 
         with(holder as ViewHolder) {
             with(binding) {
-                tvTitulo.text = playlist.titulo
+                tvTitulo.text = playlist.titulo.capitalize()
+
                 if (playlist.numeroCanciones != null || playlist.numeroCanciones > 0) {
                     tvNumeroCanciones.text = playlist.numeroCanciones.toString()+" canciones"
                 } else {
@@ -39,7 +44,7 @@ class PlaylistListAdapter(): ListAdapter<Playlist, RecyclerView.ViewHolder>(Play
                 }
 
                 if (playlist.fechaCreacion != null) {
-                    tvFechaCreacion.text = "Creada el "+playlist.fechaCreacion.day+"/"+playlist.fechaCreacion.month+"/"+playlist.fechaCreacion.year
+                    tvFechaCreacion.text = "Creada el ${commonFunctions.parseDate(playlist.fechaCreacion)}"
                 } else {
                     tvFechaCreacion.text = "Fecha de creación no especificada"
                 }

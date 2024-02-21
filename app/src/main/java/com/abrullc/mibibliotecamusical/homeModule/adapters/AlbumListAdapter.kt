@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.abrullc.mibibliotecamusical.R
+import com.abrullc.mibibliotecamusical.common.utils.CommonFunctions
 import com.abrullc.mibibliotecamusical.databinding.ItemAlbumBinding
 import com.abrullc.mibibliotecamusical.retrofit.entities.Album
 import com.bumptech.glide.Glide
@@ -15,6 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class AlbumListAdapter(): ListAdapter<Album, RecyclerView.ViewHolder>(AlbumDiffCallback()) {
     private lateinit var context: Context
+    private lateinit var commonFunctions: CommonFunctions
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemAlbumBinding.bind(view)
@@ -22,6 +24,8 @@ class AlbumListAdapter(): ListAdapter<Album, RecyclerView.ViewHolder>(AlbumDiffC
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
+
+        commonFunctions = CommonFunctions()
 
         val view = LayoutInflater.from(context).inflate(R.layout.item_album, parent, false)
 
@@ -35,7 +39,7 @@ class AlbumListAdapter(): ListAdapter<Album, RecyclerView.ViewHolder>(AlbumDiffC
             with(binding) {
                 tvTitulo.text = album.titulo
                 tvArtista.text = "Artista: "+album.artista.nombre
-                tvAnyo.text = "Año: "+album.anyo.day+"/"+album.anyo.month+"/"+album.anyo.year
+                tvAnyo.text = commonFunctions.parseDate(album.anyo)
 
                 if (album.imagen != null && album.imagen != "") {
                     Glide.with(context)

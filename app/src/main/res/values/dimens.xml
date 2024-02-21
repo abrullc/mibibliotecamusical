@@ -10,4 +10,5 @@
     <dimen name="img_card_size">100dp</dimen>
     <dimen name="card_size">300dp</dimen>
     <dimen name="margin_min">8dp</dimen>
+    <dimen name="separator_size">2dp</dimen>
 </resources>

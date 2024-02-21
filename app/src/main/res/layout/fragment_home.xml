@@ -7,6 +7,30 @@
     android:orientation="vertical"
     tools:context=".homeModule.HomeFragment">
 
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/home_title"
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        android:textStyle="bold"
+        android:textColor="@color/seed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/common_margin_default"/>
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separator_size"
+        android:background="@color/md_theme_light_outlineVariant"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        android:layout_margin="@dimen/common_margin_default"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvPlaylists"
         android:layout_width="0dp"
@@ -16,7 +40,7 @@
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separator"
         app:layout_constraintBottom_toTopOf="@+id/rcvPodcasts"/>
 
     <androidx.recyclerview.widget.RecyclerView

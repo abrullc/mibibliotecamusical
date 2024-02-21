@@ -2,6 +2,7 @@ package com.abrullc.mibibliotecamusical.loginModule
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -27,27 +28,34 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLoginBinding
+    private lateinit var mBinding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        mBinding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
 
         loadImgPortada("https://i.blogs.es/827c3a/spotify-0/1366_2000.jpg")
 
-        //setupRecyclerView()
+        val preferences = getPreferences(MODE_PRIVATE)
 
-        binding.btnLogin.setOnClickListener {
-            val username = binding.etUsername.text.toString()
-            val password = binding.etPassword.text.toString()
+        val rememberUsusario = preferences.getBoolean(getString(R.string.sp_remember_usuario), false)
+        val spIdUsuario = preferences.getInt(getString(R.string.sp_id_usuario), 0)
+
+        if (rememberUsusario) {
+            getUsuario(spIdUsuario)
+        }
+
+        mBinding.btnLogin.setOnClickListener {
+            val username = mBinding.etUsername.text.toString()
+            val password = mBinding.etPassword.text.toString()
 
             checkUserFields(username, password)
 
             checkUsuario(username, password)
         }
 
-        binding.newUser.setOnClickListener {
+        mBinding.newUser.setOnClickListener {
             val dialogView = layoutInflater.inflate(R.layout.dialog_register, null)
             lateinit var usuario: Usuario
 
@@ -64,8 +72,8 @@ class LoginActivity : AppCompatActivity() {
 
                             Toast.makeText(this, "Nuevo usuario $username registrado!", Toast.LENGTH_SHORT).show()
 
-                            binding.etUsername.setText(username)
-                            binding.etPassword.setText(password)
+                            mBinding.etUsername.setText(username)
+                            mBinding.etPassword.setText(password)
                         }
                     })
                 .setNegativeButton(R.string.dialog_cancel, null)
@@ -76,12 +84,6 @@ class LoginActivity : AppCompatActivity() {
             focusChangeListener(dialogView.findViewById(R.id.tilPassword), dialogView.findViewById(R.id.etPassword))
         }
     }
-
-    /*private fun setupRecyclerView() {
-        //configuracion del adapter
-
-        getCanciones()
-    }*/
 
     private fun checkUsuario(loginUsername: String, loginPassword: String) {
         val retrofit = Retrofit.Builder()
@@ -102,6 +104,8 @@ class LoginActivity : AppCompatActivity() {
                     for (usuario in usuarios) {
                         if (usuario.username == loginUsername && usuario.password == loginPassword) {
                             BibliotecaMusicalApplication.usuario = usuario
+
+                            spLogin()
                             Toast.makeText(this@LoginActivity, "Bienvenido ${usuario.username}!", Toast.LENGTH_LONG).show()
                             goToMain()
                         }
@@ -112,41 +116,73 @@ class LoginActivity : AppCompatActivity() {
 
             } catch (e: Exception) {
                 (e as? HttpException)?.let {
-                    errorAlertDialog("Error desconocido en el login")
-                    /*when(it.code()) {
+                    when(it.code()) {
                         400 -> {
-                            updateUI(getString(R.string.main_error_server))
+                            Toast.makeText(this@LoginActivity, R.string.main_error_server, Toast.LENGTH_SHORT).show()
                         }
                         else ->
-                            updateUI(getString(R.string.main_error_response))
-                    }*/
+                            Toast.makeText(this@LoginActivity, R.string.error_general_peticion, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
     }
 
+    private fun getUsuario(idUsuario: Int) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-     /*private fun getCanciones() {
-         val retrofit = Retrofit.Builder()
-             .baseUrl(Constants.BASE_URL)
-             .addConverterFactory(GsonConverterFactory.create())
-             .build()
+        val service = retrofit.create(UsuarioService::class.java)
 
-         val service = retrofit.create(CancionService::class.java)
+        lifecycleScope.launch {
+            try {
+                val result = service.getUsuario(idUsuario)
+                val usuario = result.body()!!
+                
+                withContext(Dispatchers.Main) {
+                    BibliotecaMusicalApplication.usuario = usuario
 
-         lifecycleScope.launch {
-             try {
-                 val result = service.getCanciones()
-                 val canciones = result.body()!!
+                    with(mBinding) {
+                        etUsername.setText(usuario.username)
+                        etPassword.setText(usuario.password)
+                        cbRememberPass.isChecked = true
+                    }
 
-                 withContext(Dispatchers.Main) {
-                     //randomAdapter.submitList(canciones)
-                 }
+                    Toast.makeText(this@LoginActivity, "Bienvenido ${usuario.username}!", Toast.LENGTH_LONG).show()
+                    goToMain()
+                }
+            } catch (e: Exception) {
+                (e as? HttpException)?.let {
+                    when(it.code()) {
+                        400 -> {
+                            Toast.makeText(this@LoginActivity, R.string.main_error_server, Toast.LENGTH_SHORT).show()
+                        }
+                        else ->
+                            Toast.makeText(this@LoginActivity, R.string.error_general_peticion, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
 
-             } catch (//tratar excepcion) {
-             // ...
-         }
-     }*/
+    private fun spLogin() {
+        val preferences = getPreferences(MODE_PRIVATE)
+
+        if (mBinding.cbRememberPass.isChecked) {
+            with(preferences.edit()) {
+                putInt(getString(R.string.sp_id_usuario), BibliotecaMusicalApplication.usuario.id)
+                putBoolean(getString(R.string.sp_remember_usuario), true)
+                    .apply()
+            }
+        } else {
+            with(preferences.edit()) {
+                putBoolean(getString(R.string.sp_remember_usuario), false)
+                    .apply()
+            }
+        }
+    }
 
     private fun goToMain() {
         val intent = Intent(this, MainActivity::class.java)
@@ -158,7 +194,7 @@ class LoginActivity : AppCompatActivity() {
             .load(url)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .centerCrop()
-            .into(binding.imgPortada)
+            .into(mBinding.imgPortada)
     }
 
     private fun checkUserFields(username: String, password: String): Boolean {

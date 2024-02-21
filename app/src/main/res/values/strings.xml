@@ -28,4 +28,8 @@
     <string name="album_title">Titulo album</string>
     <string name="album_artista">Artista: nombreArtista</string>
     <string name="album_anyo">Año: 0000</string>
+    <string name="home_title">Mi Biblioteca Musical</string>
+    <string name="sp_id_usuario">id_usuario</string>
+    <string name="sp_remember_usuario">control_recuerdo_usuario</string>
+    <string name="main_error_server">Error en la petición</string>
 </resources>
