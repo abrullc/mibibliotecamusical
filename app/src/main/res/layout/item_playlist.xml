@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/card_size"
-    android:layout_height="wrap_content"
+    android:layout_width="@dimen/card_width"
+    android:layout_height="match_parent"
     android:layout_margin="@dimen/common_margin_default"
     android:backgroundTint="@color/md_theme_light_secondaryContainer">
 
@@ -15,23 +15,25 @@
         <ImageView
             android:id="@+id/imagePlaylist"
             android:src="@drawable/ic_playlist"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/img_card_size"
+            android:layout_width="@dimen/img_width"
+            android:layout_height="0dp"
             android:contentDescription="@string/description_image_playlist_card"
             android:background="@color/seed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@id/playlistInfo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <LinearLayout
+            android:id="@+id/playlistInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imagePlaylist"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imagePlaylist"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:padding="@dimen/common_padding_default">
+            android:layout_marginHorizontal="@dimen/common_margin_default">
 
             <TextView
                 android:id="@+id/tvTitulo"
@@ -53,7 +55,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="@string/playlist_fecha_creacion"
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:layout_marginTop="@dimen/margin_min"/>
 
         </LinearLayout>
 
