@@ -41,7 +41,7 @@ class AlbumListAdapter(): ListAdapter<Album, RecyclerView.ViewHolder>(AlbumDiffC
                 tvArtista.text = "Artista: "+album.artista.nombre
                 tvAnyo.text = commonFunctions.parseDate(album.anyo)
 
-                if (album.imagen != null && album.imagen != "") {
+                if (album.imagen != null && commonFunctions.validateURL(album.imagen)) {
                     Glide.with(context)
                         .load(album.imagen)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)

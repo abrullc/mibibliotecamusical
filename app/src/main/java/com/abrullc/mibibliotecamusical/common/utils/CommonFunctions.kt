@@ -1,5 +1,6 @@
 package com.abrullc.mibibliotecamusical.common.utils
 
+import android.webkit.URLUtil
 import java.util.Date
 
 class CommonFunctions {
@@ -11,5 +12,13 @@ class CommonFunctions {
         val formatedFecha = "$fechaDia - $fechaMes - $fechaAnyo"
 
         return formatedFecha
+    }
+
+    fun validateURL(url: String): Boolean {
+        if (!URLUtil.isValidUrl(url.trim()) && !url.trim().isEmpty()) {
+            return false
+        }
+
+        return true
     }
 }
