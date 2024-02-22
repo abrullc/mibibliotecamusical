@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_marginTop="@dimen/large_margin"
+    android:layout_marginHorizontal="@dimen/common_margin_default"
+    android:layout_marginBottom="@dimen/common_margin_default"
     tools:context=".findModule.FindFragment">
 
     <ImageView
@@ -17,8 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tvTitle"
         app:layout_constraintTop_toTopOf="@id/tvTitle"
-        app:layout_constraintBottom_toBottomOf="@id/tvTitle"
-        android:layout_marginStart="@dimen/common_margin_default"/>
+        app:layout_constraintBottom_toBottomOf="@id/tvTitle" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -30,9 +32,29 @@
         app:layout_constraintStart_toEndOf="@id/iconMusic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/rcvCanciones"
-        android:layout_marginTop="@dimen/large_margin"
-        android:layout_marginHorizontal="@dimen/margin_min" />
+        app:layout_constraintBottom_toTopOf="@id/separator"
+        android:layout_marginStart="@dimen/margin_min" />
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separator_size"
+        android:background="@color/md_theme_light_secondary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        android:layout_marginVertical="@dimen/common_margin_default"/>
+
+    <SearchView
+        android:id="@+id/svSongs"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:queryHint="@string/hint_search_songs"
+        android:iconifiedByDefault="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separator"
+        android:layout_marginTop="@dimen/common_margin_default"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvCanciones"
@@ -42,7 +64,7 @@
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/svSongs"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="@dimen/common_margin_default"/>
 

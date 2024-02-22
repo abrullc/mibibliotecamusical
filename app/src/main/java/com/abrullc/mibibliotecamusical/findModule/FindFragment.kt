@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import com.abrullc.mibibliotecamusical.R
 import com.abrullc.mibibliotecamusical.common.utils.Constants
 import com.abrullc.mibibliotecamusical.databinding.FragmentFindBinding
 import com.abrullc.mibibliotecamusical.findModule.adapters.CancionListAdapter
+import com.abrullc.mibibliotecamusical.retrofit.entities.Cancion
 import com.abrullc.mibibliotecamusical.retrofit.services.CancionService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,6 +29,8 @@ class FindFragment : Fragment() {
     private lateinit var mCancionAdapter: CancionListAdapter
 
     private lateinit var mCancionLinearLayoutManager: RecyclerView.LayoutManager
+
+    private lateinit var listaCanciones: MutableList<Cancion>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,6 +40,8 @@ class FindFragment : Fragment() {
         getCanciones()
 
         setupRecyclerView()
+
+        setupSearchView()
 
         return mBinding.root
     }
@@ -54,6 +60,25 @@ class FindFragment : Fragment() {
         }
     }
 
+    private fun setupSearchView() {
+        /* Fuentes:
+        * https://www.youtube.com/watch?v=l_LjUpbHxm0
+        * https://www.youtube.com/watch?v=8q-4AJFlraI
+        * https://www.youtube.com/watch?v=2I1NkJNBz9M */
+        mBinding.svSongs.setOnQueryTextListener(
+            object: SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    getCancionesByFilter(newText)
+                    return true
+                }
+            }
+        )
+    }
+
     private fun getCanciones() {
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
@@ -69,6 +94,7 @@ class FindFragment : Fragment() {
 
                 withContext(Dispatchers.Main) {
                     mCancionAdapter.submitList(canciones)
+                    listaCanciones = canciones
                 }
 
             } catch (e: Exception) {
@@ -83,5 +109,17 @@ class FindFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun getCancionesByFilter(filter: String) {
+        val filteredCanciones = mutableListOf<Cancion>()
+
+        for (cancion in listaCanciones) {
+            if (cancion.titulo.toLowerCase().contains(filter.toLowerCase())) {
+                filteredCanciones.add(cancion)
+            }
+        }
+
+        mCancionAdapter.submitList(filteredCanciones)
     }
 }
