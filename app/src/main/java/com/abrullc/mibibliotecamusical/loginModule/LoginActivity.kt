@@ -26,6 +26,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.Date
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityLoginBinding
@@ -35,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
         mBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        loadImgPortada(getString(R.string.url_photo_login))
+        loadImgPortada("https://i.blogs.es/827c3a/spotify-0/1366_2000.jpg")
 
         val preferences = getPreferences(MODE_PRIVATE)
 
@@ -47,8 +48,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         mBinding.btnLogin.setOnClickListener {
-            val username = mBinding.etUsername.text.toString()
-            val password = mBinding.etPassword.text.toString()
+            val username = mBinding.etUsername.text.toString().trim()
+            val password = mBinding.etPassword.text.toString().trim()
 
             checkUserFields(username, password)
 
@@ -56,36 +57,13 @@ class LoginActivity : AppCompatActivity() {
         }
 
         mBinding.newUser.setOnClickListener {
-            val dialogView = layoutInflater.inflate(R.layout.dialog_register, null)
-            lateinit var usuario: Usuario
-
-            MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.dialog_new_user_title)
-                .setView(dialogView)
-                .setPositiveButton(R.string.dialog_register_user,
-                    DialogInterface.OnClickListener { _, _ ->
-                        val username = dialogView.findViewById<TextInputEditText>(R.id.etUsername).text.toString()
-                        val password = dialogView.findViewById<TextInputEditText>(R.id.etPassword).text.toString()
-
-                        if (checkUserFields(username, password)) {
-                            //user = Usuario(username = username, password = password)
-
-                            Toast.makeText(this, "Nuevo usuario $username registrado!", Toast.LENGTH_SHORT).show()
-
-                            mBinding.etUsername.setText(username)
-                            mBinding.etPassword.setText(password)
-                        }
-                    })
-                .setNegativeButton(R.string.dialog_cancel, null)
-                .setCancelable(true)
-                .show()
-
-            focusChangeListener(dialogView.findViewById(R.id.tilUsername), dialogView.findViewById(R.id.etUsername))
-            focusChangeListener(dialogView.findViewById(R.id.tilPassword), dialogView.findViewById(R.id.etPassword))
+            createUser()
         }
     }
 
     private fun checkUsuario(loginUsername: String, loginPassword: String) {
+        var checked = false
+
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -105,13 +83,17 @@ class LoginActivity : AppCompatActivity() {
                         if (usuario.username == loginUsername && usuario.password == loginPassword) {
                             BibliotecaMusicalApplication.usuario = usuario
 
+                            checked = true
                             spLogin()
                             Toast.makeText(this@LoginActivity, "Bienvenido ${usuario.username}!", Toast.LENGTH_LONG).show()
                             goToMain()
+                            break
                         }
                     }
 
-                    errorAlertDialog(getString(R.string.error_login))
+                    if (!checked) {
+                        errorAlertDialog(getString(R.string.error_login))
+                    }
                 }
 
             } catch (e: Exception) {
@@ -184,6 +166,77 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun createUser() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_register, null)
+        lateinit var usuario: Usuario
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.dialog_new_user_title)
+            .setView(dialogView)
+            .setPositiveButton(R.string.dialog_register_user,
+                DialogInterface.OnClickListener { _, _ ->
+                    val username = dialogView.findViewById<TextInputEditText>(R.id.etUsername).text.toString().trim()
+                    val password = dialogView.findViewById<TextInputEditText>(R.id.etPassword).text.toString().trim()
+                    val email = dialogView.findViewById<TextInputEditText>(R.id.etEmail).text.toString().trim()
+
+                    if (checkUserFields(username, password)) {
+                        usuario = Usuario(
+                            id = 0,
+                            username = username,
+                            password = password,
+                            email = checkOptionalField(email),
+                            genero = null,
+                            fechaNacimiento = Date(),
+                            pais = null,
+                            codigoPostal = null
+                        )
+
+                        registerUser(usuario)
+                    }
+                })
+            .setNegativeButton(R.string.dialog_cancel, null)
+            .setCancelable(true)
+            .show()
+
+        focusChangeListener(dialogView.findViewById(R.id.tilUsername), dialogView.findViewById(R.id.etUsername))
+        focusChangeListener(dialogView.findViewById(R.id.tilPassword), dialogView.findViewById(R.id.etPassword))
+    }
+
+    private fun registerUser(usuario: Usuario) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = retrofit.create(UsuarioService::class.java)
+
+        lifecycleScope.launch {
+            try {
+                val result = service.postUsuario(usuario)
+                val usuario = result.body()!!
+
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@LoginActivity, "Nuevo usuario ${usuario.username} registrado!", Toast.LENGTH_SHORT).show()
+
+                    with(mBinding) {
+                        etUsername.setText(usuario.username)
+                        etPassword.setText(usuario.password)
+                    }
+                }
+            } catch (e: Exception) {
+                (e as? HttpException)?.let {
+                    when (it.code()) {
+                        400 -> {
+                            Toast.makeText(this@LoginActivity, R.string.main_error_server, Toast.LENGTH_SHORT).show()
+                        }
+                        else ->
+                            Toast.makeText(this@LoginActivity, R.string.error_general_peticion, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
     private fun goToMain() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
@@ -209,6 +262,14 @@ class LoginActivity : AppCompatActivity() {
         }
 
         return true
+    }
+
+    private fun checkOptionalField(field: String): String? {
+        if (field.isEmpty()) {
+            return null
+        } else {
+            return field
+        }
     }
 
     private fun focusChangeListener(layout: TextInputLayout, textInput: TextInputEditText) {

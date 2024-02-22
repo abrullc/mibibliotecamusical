@@ -50,7 +50,6 @@
     <string name="error_password_empty">El campo de la contraseña está vacío.</string>
     <string name="error_required_field">Este campo es obligatorio</string>
     <string name="error_login">El usuario y/o contraseña introducidos son incorrectos</string>
-    <string name="url_photo_login">https://i.blogs.es/827c3a/spotify-0/1366_2000.jpg</string>
     <string name="text_artista">"Artista: "</string>
     <string name="text_album">"Álbum: "</string>
     <string name="not_specfied_artista">Artista no especificado</string>
@@ -61,4 +60,6 @@
     <string name="text_created_on">"Creada el "</string>
     <string name="not_specified_create_date">Fecha de creación no especificada</string>
     <string name="text_year">"Año: "</string>
+    <string name="helper_text_optional">Opcional</string>
+    <string name="hint_email">E-mail</string>
 </resources>

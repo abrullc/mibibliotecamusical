@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="max_length_username">30</integer>
+    <integer name="max_length_username">45</integer>
+    <integer name="max_length_password">150</integer>
+    <integer name="max_length_email">150</integer>
 </resources>

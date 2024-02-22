@@ -11,15 +11,4 @@ object Constants {
     const val PODCASTS_USUARIO_PATH = "/usuario/{id}/podcasts"
     const val ALBUMS_USUARIO_PATH = "/usuario/{id}/albums"
     const val CANCIONES_PATH = "/canciones"
-
-    // PROPIEDADES
-    const val ID_PROPERTY = "id"
-    const val TOKEN_PROPERTY = "token"
-    const val DATA_PROPERTY = "data"
-    const val SUPPORT_PROPERTY = "support"
-
-    // RESULTADOS
-    const val EMAIL_PARAM = "email"
-    const val PASSWORD_PARAM = "password"
-    const val ERROR_VALUE = "fail"
 }
