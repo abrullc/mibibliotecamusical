@@ -2,7 +2,6 @@ package com.abrullc.mibibliotecamusical.loginModule
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,6 +9,7 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.abrullc.mibibliotecamusical.BibliotecaMusicalApplication
 import com.abrullc.mibibliotecamusical.R
+import com.abrullc.mibibliotecamusical.common.utils.CommonFunctions
 import com.abrullc.mibibliotecamusical.common.utils.Constants
 import com.abrullc.mibibliotecamusical.databinding.ActivityLoginBinding
 import com.abrullc.mibibliotecamusical.mainModule.MainActivity
@@ -30,6 +30,7 @@ import java.util.Date
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityLoginBinding
+    private lateinit var commonFunctions: CommonFunctions
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +38,8 @@ class LoginActivity : AppCompatActivity() {
         setContentView(mBinding.root)
 
         loadImgPortada("https://i.blogs.es/827c3a/spotify-0/1366_2000.jpg")
+
+        commonFunctions = CommonFunctions()
 
         val preferences = getPreferences(MODE_PRIVATE)
 
@@ -92,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     if (!checked) {
-                        errorAlertDialog(getString(R.string.error_login))
+                        commonFunctions.errorAlertDialog(getString(R.string.error_login), this@LoginActivity)
                     }
                 }
 
@@ -252,12 +255,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun checkUserFields(username: String, password: String): Boolean {
         if (username.isEmpty()) {
-            errorAlertDialog(getString(R.string.error_username_empty))
+            commonFunctions.errorAlertDialog(getString(R.string.error_username_empty), this)
             return false
         }
 
         if (password.isEmpty()) {
-            errorAlertDialog(getString(R.string.error_password_empty))
+            commonFunctions.errorAlertDialog(getString(R.string.error_password_empty), this)
             return false
         }
 
@@ -283,14 +286,5 @@ class LoginActivity : AppCompatActivity() {
             }
             layout.error = errorStr
         }
-    }
-
-    private fun errorAlertDialog(texto: String) {
-        MaterialAlertDialogBuilder(this@LoginActivity)
-            .setTitle(R.string.dialog_error_title)
-            .setMessage(texto)
-            .setPositiveButton(R.string.dialog_confirm, null)
-            .setCancelable(false)
-            .show()
     }
 }

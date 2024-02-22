@@ -1,6 +1,9 @@
 package com.abrullc.mibibliotecamusical.common.utils
 
+import android.content.Context
 import android.webkit.URLUtil
+import com.abrullc.mibibliotecamusical.R
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.Date
 
 class CommonFunctions {
@@ -27,5 +30,14 @@ class CommonFunctions {
         }
 
         return true
+    }
+
+    fun errorAlertDialog(texto: String, context: Context) {
+        MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.dialog_error_title)
+            .setMessage(texto)
+            .setPositiveButton(R.string.dialog_confirm, null)
+            .setCancelable(false)
+            .show()
     }
 }

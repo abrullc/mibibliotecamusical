@@ -1,7 +1,5 @@
 package com.abrullc.mibibliotecamusical.common.utils
 
-import com.abrullc.mibibliotecamusical.BibliotecaMusicalApplication
-
 object Constants {
     // RUTAS
     const val BASE_URL = "http://lab1.navelsystems.com"
@@ -11,4 +9,5 @@ object Constants {
     const val PODCASTS_USUARIO_PATH = "/usuario/{id}/podcasts"
     const val ALBUMS_USUARIO_PATH = "/usuario/{id}/albums"
     const val CANCIONES_PATH = "/canciones"
+    const val CANCION_TO_PLAYLIST_PATH = "/playlist/{idPlaylist}/cancion/{idCancion}"
 }

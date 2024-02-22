@@ -100,6 +100,7 @@ class HomeFragment : Fragment() {
 
                 withContext(Dispatchers.Main) {
                     mPlaylistAdapter.submitList(playlistsUsuario)
+                    BibliotecaMusicalApplication.playlistsUsuario = playlistsUsuario
                 }
 
             } catch (e: Exception) {

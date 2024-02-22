@@ -11,11 +11,15 @@ import com.abrullc.mibibliotecamusical.R
 import com.abrullc.mibibliotecamusical.databinding.ItemCancionBinding
 import com.abrullc.mibibliotecamusical.retrofit.entities.Cancion
 
-class CancionListAdapter(): ListAdapter<Cancion, RecyclerView.ViewHolder>(CancionDiffCallback()) {
+class CancionListAdapter(private var listener: OnClickListener): ListAdapter<Cancion, RecyclerView.ViewHolder>(CancionDiffCallback()) {
     private lateinit var context: Context
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemCancionBinding.bind(view)
+
+        fun setListener(cancion: Cancion) {
+            binding.root.setOnClickListener { listener.onAddCancionToUserPlaylist(cancion) }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,6 +34,8 @@ class CancionListAdapter(): ListAdapter<Cancion, RecyclerView.ViewHolder>(Cancio
         val cancion = getItem(position)
 
         with(holder as ViewHolder) {
+            setListener(cancion)
+
             with(binding) {
                 tvTitulo.text = cancion.titulo
                 tvArtista.text = context.getString(R.string.text_artista)+cancion.album.artista.nombre
