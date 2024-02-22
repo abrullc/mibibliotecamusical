@@ -40,9 +40,9 @@ class PodcastListAdapter(): ListAdapter<Podcast, RecyclerView.ViewHolder>(Podcas
                 tvTitulo.text = podcast.titulo
 
                 if (podcast.anyo != null) {
-                    tvAnyo.text = "Año: "+commonFunctions.getAnyo(podcast.anyo)
+                    tvAnyo.text = context.getString(R.string.text_year)+commonFunctions.getAnyo(podcast.anyo)
                 } else {
-                    tvAnyo.text = "Año no especificado"
+                    tvAnyo.text = context.getString(R.string.not_specified_year)
                 }
 
                 if (podcast.imagen != null && commonFunctions.validateURL(podcast.imagen)) {

@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
         mBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        loadImgPortada("https://i.blogs.es/827c3a/spotify-0/1366_2000.jpg")
+        loadImgPortada(getString(R.string.url_photo_login))
 
         val preferences = getPreferences(MODE_PRIVATE)
 
@@ -111,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
 
-                    errorAlertDialog("El usuario y/o contraseña introducidos son incorrectos")
+                    errorAlertDialog(getString(R.string.error_login))
                 }
 
             } catch (e: Exception) {
@@ -199,12 +199,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun checkUserFields(username: String, password: String): Boolean {
         if (username.isEmpty()) {
-            errorAlertDialog("El campo del nombre de usuario está vacío.")
+            errorAlertDialog(getString(R.string.error_username_empty))
             return false
         }
 
         if (password.isEmpty()) {
-            errorAlertDialog("El campo de la contraseña está vacío.")
+            errorAlertDialog(getString(R.string.error_password_empty))
             return false
         }
 
@@ -217,7 +217,7 @@ class LoginActivity : AppCompatActivity() {
 
             if (!focused) {
                 if(textInput.text.toString().isEmpty()) {
-                    errorStr = "Este campo es obligatorio"
+                    errorStr = getString(R.string.error_required_field)
                 }
             }
             layout.error = errorStr

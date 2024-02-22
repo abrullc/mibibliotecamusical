@@ -32,8 +32,8 @@ class CancionListAdapter(): ListAdapter<Cancion, RecyclerView.ViewHolder>(Cancio
         with(holder as ViewHolder) {
             with(binding) {
                 tvTitulo.text = cancion.titulo
-                tvArtista.text = "Artista: "+cancion.album.artista.nombre
-                tvAlbum.text = "Álbum: "+cancion.album.titulo
+                tvArtista.text = context.getString(R.string.text_artista)+cancion.album.artista.nombre
+                tvAlbum.text = context.getString(R.string.text_album)+cancion.album.titulo
                 tvDuration.text = cancion.duracion.toString()
                 tvReproductions.text = cancion.numeroReproducciones.toString()
             }

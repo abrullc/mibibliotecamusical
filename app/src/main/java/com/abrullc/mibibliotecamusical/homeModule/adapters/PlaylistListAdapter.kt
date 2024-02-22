@@ -39,18 +39,18 @@ class PlaylistListAdapter(): ListAdapter<Playlist, RecyclerView.ViewHolder>(Play
 
                 if (playlist.numeroCanciones != null && playlist.numeroCanciones > 0) {
                     if (playlist.numeroCanciones == 1) {
-                        tvNumeroCanciones.text = "1 canción"
+                        tvNumeroCanciones.text = context.getString(R.string.one_song)
                     } else {
-                        tvNumeroCanciones.text = playlist.numeroCanciones.toString()+" canciones"
+                        tvNumeroCanciones.text = playlist.numeroCanciones.toString()+ context.getString(R.string.songs)
                     }
                 } else {
-                    tvNumeroCanciones.text = "Sin canciones"
+                    tvNumeroCanciones.text = context.getString(R.string.without_songs)
                 }
 
                 if (playlist.fechaCreacion != null) {
-                    tvFechaCreacion.text = "Creada el ${commonFunctions.parseDate(playlist.fechaCreacion)}"
+                    tvFechaCreacion.text = context.getString(R.string.text_created_on)+commonFunctions.parseDate(playlist.fechaCreacion)
                 } else {
-                    tvFechaCreacion.text = "Fecha de creación no especificada"
+                    tvFechaCreacion.text = context.getString(R.string.not_specified_create_date)
                 }
             }
         }

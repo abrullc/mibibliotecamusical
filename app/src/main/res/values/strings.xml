@@ -34,7 +34,7 @@
     <string name="main_error_server">Error en la petición</string>
     <string name="playlists_title">Playlists</string>
     <string name="podcasts_title">Podcasts</string>
-    <string name="albums_title">Albums</string>
+    <string name="albums_title">Álbums</string>
     <string name="description_icon_music">Music icon</string>
     <string name="description_icon_playlist">Playlist icon</string>
     <string name="description_icon_podcast">Podcast icon</string>
@@ -46,4 +46,19 @@
     <string name="song_duration">000s</string>
     <string name="song_reproductions">0000</string>
     <string name="album_song">Álbum:</string>
+    <string name="error_username_empty">El campo del nombre de usuario está vacío.</string>
+    <string name="error_password_empty">El campo de la contraseña está vacío.</string>
+    <string name="error_required_field">Este campo es obligatorio</string>
+    <string name="error_login">El usuario y/o contraseña introducidos son incorrectos</string>
+    <string name="url_photo_login">https://i.blogs.es/827c3a/spotify-0/1366_2000.jpg</string>
+    <string name="text_artista">"Artista: "</string>
+    <string name="text_album">"Álbum: "</string>
+    <string name="not_specfied_artista">Artista no especificado</string>
+    <string name="not_specified_year">Año no especificado</string>
+    <string name="one_song">1 canción</string>
+    <string name="songs">" canciones"</string>
+    <string name="without_songs">Sin canciones</string>
+    <string name="text_created_on">"Creada el "</string>
+    <string name="not_specified_create_date">Fecha de creación no especificada</string>
+    <string name="text_year">"Año: "</string>
 </resources>

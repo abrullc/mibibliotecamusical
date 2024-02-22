@@ -40,15 +40,15 @@ class AlbumListAdapter(): ListAdapter<Album, RecyclerView.ViewHolder>(AlbumDiffC
                 tvTitulo.text = album.titulo
 
                 if (album.artista != null && album.artista.nombre != null && album.artista.nombre.isNotEmpty())
-                    tvArtista.text = "Artista: "+album.artista.nombre
+                    tvArtista.text = context.getString(R.string.text_artista)+album.artista.nombre
                 else {
-                    tvArtista.text = "Artista no especificado"
+                    tvArtista.text = context.getString(R.string.not_specfied_artista)
                 }
 
                 if (album.anyo != null) {
-                    tvAnyo.text = "Año: "+commonFunctions.getAnyo(album.anyo)
+                    tvAnyo.text = context.getString(R.string.text_year)+commonFunctions.getAnyo(album.anyo)
                 } else {
-                    tvAnyo.text = "Año no especificado"
+                    tvAnyo.text = context.getString(R.string.not_specified_year)
                 }
 
                 if (album.imagen != null && commonFunctions.validateURL(album.imagen)) {
